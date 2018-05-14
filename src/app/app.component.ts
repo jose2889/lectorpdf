@@ -1,7 +1,7 @@
 /**
  * Created by vadimdez on 21/06/16.
  */
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { PDFProgressData, PDFDocumentProxy, PDFSource } from './pdf-viewer/pdf-viewer.module';
 
 import { PdfViewerComponent } from './pdf-viewer/pdf-viewer.component';
@@ -44,6 +44,12 @@ export class AppComponent {
 
   @ViewChild(PdfViewerComponent) private pdfComponent: PdfViewerComponent;
 
+  search(stringToSearch: string) {
+    console.log("se disparo la busqueda con: "+stringToSearch);
+  this.pdfComponent.pdfFindController.executeCommand('find', {
+    caseSensitive: false, findPrevious: undefined, highlightAll: true, phraseSearch: true, query: stringToSearch
+  });
+  }
   constructor() {
     // Load pdf
     // let xhr = new XMLHttpRequest();
@@ -68,6 +74,9 @@ export class AppComponent {
     (<any>window).pdfWorkerSrc = '/lib/pdfjs-dist/build/pdf.worker.js';
   }
 
+  // printpdf() {
+  //   this.winRef.open(this.pdfSrc).print();
+  //   }
   incrementPage(amount: number) {
     this.page += amount;
   }
